@@ -1,10 +1,42 @@
-# fielding
 import logging
 import mysql.connector
 import json
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+from collections import defaultdict
+
+def insert_fielding_data(cursor, player_id, season, career_stat, season_stat, data):
+    if career_stat:
+        stats = career_stat
+    elif season_stat:
+        stats = season_stat
+    else:
+        return
+
+    error = stats.get("errors")
+    assist = stats.get("assists")
+    putout = stats.get("putOuts")
+    games_played = stats.get("gamesPlayed")
+
+    position = stats.get("position")
+    if position:
+        position = position.get("name").upper()
+    else:
+        position = data.get("primaryPosition").get("name").upper()
+    position = position.replace(" ", "_")
+    position = position.replace("-", "_")
+
+    cursor.execute('''
+        INSERT INTO `Fielding` (player_id, season, error, assist, putout, games_played, position)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    ''', (player_id, season, error, assist, putout, games_played, position))
+
+def parse_float(value):
+    try:
+        return float(value)
+    except ValueError:
+        return 0
 
 load_dotenv()
 # 로그 설정
@@ -19,7 +51,7 @@ logger.addHandler(log_file_handler)
 db_user = os.getenv("DB_USER")
 db_password = os.getenv("DB_PASSWORD")
 db_host = os.getenv("DB_HOST")
-print(db_host)
+
 # MariaDB 연결 설정
 config = {
     'user': db_user,
@@ -42,60 +74,48 @@ for filename in os.listdir(folder_path):
             with open(os.path.join(folder_path, filename), 'r') as json_file:
                 data = json.load(json_file)
                 player_id = data.get("id")
-                stats= data.get("stats")
-                if(stats == None):
+                stats = data.get("stats")
+                if stats is None:
                     continue
-
+                    
+                main_position = data.get("primaryPosition").get("name").upper()
+                main_position = main_position.replace(" ", "_")
+                main_position = main_position.replace("-", "_")
                 for stat in stats:
                     if stat.get("group").get("displayName") == "fielding":
                         if stat.get("type").get("displayName") == "career":
-                            # print("fielding career")
+                            splits = stat["splits"]
                             season = -1
-                            error = stat.get("splits")[0].get("stat").get("errors")
-                            assist = stat.get("splits")[0].get("stat").get("assists")
-                            putout = stat.get("splits")[0].get("stat").get("putOuts")
-                            games_played = stat.get("splits")[0].get("stat").get("gamesPlayed")
-                            if split.get("stat").get("position") != None:
-                                position = split.get("stat").get("position").get("name").upper()
-                            else:
-                                position = data.get("primaryPosition").get("name").upper()
-                            position = position.replace(" ", "_")
-                            position = position.replace("-", "_")
-                            # 데이터베이스에 데이터 삽입
-                            cursor.execute('''
-                                            INSERT INTO `Fielding` (player_id, season, error, assist, putout, games_played, position)
-                                            VALUES (%s, %s, %s, %s, %s, %s, %s)
-                                            ''', (player_id, season, error, assist, putout, games_played, position))
-                
-
-                        elif stat.get("type").get("displayName") == "yearByYear" :
-                            # print("fielding YBY")
-                            splits = stat.get("splits")
+                            career_stat = defaultdict()
+                            career_stat["position"] = main_position
                             for split in splits:
-                                season = split.get("season")
-                                error = split.get("stat").get("errors")
-                                assist = split.get("stat").get("assists")
-                                putout = split.get("stat").get("putOuts")
-                                games_played = split.get("stat").get("gamesPlayed")
-                                if split.get("stat").get("position") != None:
-                                    position = split.get("stat").get("position").get("name").upper()
-                                else:
-                                    position = data.get("primaryPosition").get("name").upper()
-                                position = position.replace(" ", "_")
-                                position = position.replace("-", "_")
-                                cursor.execute('''
-                                                INSERT INTO `Fielding` (player_id, season, error, assist, putout, games_played, position)
-                                                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                                                ''', (player_id, season, error, assist, putout, games_played, position))
-                        connection.commit()
-                        # INSERT 작업 로그를 파일에 저장
-                        logging.info(f"데이터 삽입 성공: {filename}")
-        
-        except mysql.connector.IntegrityError as e :
+                                career_stat["errors"] += split["errors"] 
+                                career_stat["putOuts"] += split["putOuts"]
+                                career_stat["assists"] += split["assists"]
+                                career_stat["gamesPlayed"] += split["gamesPlayed"]
+
+                            insert_fielding_data(cursor, player_id, season, career_stat, None, data)
+                        
+                        
+                        elif stat.get("type").get("displayName") == "yearByYear":
+                            splits = stat.get("splits")
+                            seasons = set(item['season'] for item in splits)
+                            season_stat = dict()
+                            season_stat["position"] = main_position
+                            for season in seasons:
+                                season_stat["errors"] = sum(item["stat"]["errors"] for item in splits if item["season"] == season)   
+                                season_stat["putOuts"] = sum(item["stat"]["assists"] for item in splits if item["season"] == season)
+                                season_stat["assists"] = sum(item["stat"]["putOuts"] for item in splits if item["season"] == season)
+                                season_stat["gamesPlayed"] = sum(item["stat"]["gamesPlayed"] for item in splits if item["season"] == season)
+                                
+                                insert_fielding_data(cursor, player_id, season, None, season_stat, data)
+                            connection.commit()
+                            logging.info(f"데이터 삽입 성공: {filename}")
+        except mysql.connector.IntegrityError as e:
             continue
         except Exception as e2:
-            # 오류 발생 시 로그를 파일에 저장
             logging.error(f"{filename} 에러 발생: {str(e2)}")
+
 # 연결 종료
 cursor.close()
 connection.close()
