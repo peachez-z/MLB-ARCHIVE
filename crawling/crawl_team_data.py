@@ -1,31 +1,38 @@
 import statsapi
 import json
 
-with open("../team_ids/team_ids2023.json", "r") as f:
-    teams = json.load(f)
-
-for team in teams:
-    team_id = team["id"]
-
+def get_team_info(team_id):
     try:
-        teamInfo = statsapi.get("team", {"teamId" : team_id})["teams"][0]
-        print(teamInfo)
-    except:
-        print(f"threre is no team id: {team_id}")
+        team_info = statsapi.get("team", {"teamId": team_id})["teams"][0]
+        return {
+            "team_id": team_id,
+            "team_name": team_info["name"],
+            "created_year": team_info["firstYearOfPlay"],
+            "team_logo": "",
+            "team_location": team_info["locationName"]
+        }
+    except Exception as e:
+        print(f"Failed to fetch team info for team_id {team_id}: {str(e)}")
+        return None
 
-
-    team_info =dict()
-    team_info["team_id"] = team_id
-    team_info["team_name"] = teamInfo["name"]
-    team_info["created_year"] = teamInfo["firstYearOfPlay"]
-    team_info["team_logo"] = ""
-    team_info["team_location"] = teamInfo["locationName"]
-    team_info_json = json.dumps(team_info)
+def save_team_info(team_id, team_info):
     try:
-        with open(f"../team_data/team_data_{team_id}.json", "w") as of:
-            of.write(team_info_json)
-        
-    except:
-        print(f"fail to create json file : id{team_id}")
-    
-    
+        with open(f"./team_data/team_data_{team_id}.json", "w") as of:
+            json.dump(team_info, of)
+    except Exception as e:
+        print(f"Failed to create JSON file for team_id {team_id}: {str(e)}")
+
+def main():
+    for year in range(1901, 2024):
+        with open(f"./team_ids/team_ids{year}.json", "r") as f:
+            teams = json.load(f)
+
+        for team in teams:
+            team_id = team["id"]
+            team_info = get_team_info(team_id)
+
+            if team_info:
+                save_team_info(team_id, team_info)
+
+if __name__ == "__main__":
+    main()

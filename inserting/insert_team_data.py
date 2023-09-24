@@ -41,7 +41,7 @@ try:
         team_location = team_data["team_location"]
 
         cursor.execute('''
-            INSERT INTO `Team` (team_id, team_name, created_date, team_logo, team_location)
+            INSERT INTO `Team` (team_id, team_name, created_year, team_logo, team_location)
             VALUES (%s, %s, %s, %s, %s)
         ''', (team_id, team_name, created_year, team_logo, team_location))
         connection.commit()
