@@ -5,6 +5,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 from collections import defaultdict
+import traceback
 
 def insert_fielding_data(cursor, player_id, season, career_stat, season_stat, data):
     if career_stat:
@@ -20,12 +21,6 @@ def insert_fielding_data(cursor, player_id, season, career_stat, season_stat, da
     games_played = stats.get("gamesPlayed")
 
     position = stats.get("position")
-    if position:
-        position = position.get("name").upper()
-    else:
-        position = data.get("primaryPosition").get("name").upper()
-    position = position.replace(" ", "_")
-    position = position.replace("-", "_")
 
     cursor.execute('''
         INSERT INTO `Fielding` (player_id, season, error, assist, putout, games_played, position)
@@ -86,14 +81,19 @@ for filename in os.listdir(folder_path):
                         if stat.get("type").get("displayName") == "career":
                             splits = stat["splits"]
                             season = -1
-                            career_stat = defaultdict()
+                            career_stat = dict()
                             career_stat["position"] = main_position
+                            career_stat["errors"] = 0
+                            career_stat["putOuts"] = 0
+                            career_stat["assists"] = 0
+                            career_stat["gamesPlayed"] = 0
+                            
                             for split in splits:
-                                career_stat["errors"] += split["errors"] 
-                                career_stat["putOuts"] += split["putOuts"]
-                                career_stat["assists"] += split["assists"]
-                                career_stat["gamesPlayed"] += split["gamesPlayed"]
-
+                                career_stat["errors"] += split["stat"]["errors"]
+                                career_stat["putOuts"] += split["stat"]["putOuts"]
+                                career_stat["assists"] += split["stat"]["assists"]
+                                career_stat["gamesPlayed"] += split["stat"]["gamesPlayed"]
+                                
                             insert_fielding_data(cursor, player_id, season, career_stat, None, data)
                         
                         
@@ -102,6 +102,10 @@ for filename in os.listdir(folder_path):
                             seasons = set(item['season'] for item in splits)
                             season_stat = dict()
                             season_stat["position"] = main_position
+                            season_stat["errors"] = 0
+                            season_stat["putOuts"] = 0
+                            season_stat["assists"] = 0
+                            season_stat["gamesPlayed"] = 0
                             for season in seasons:
                                 season_stat["errors"] = sum(item["stat"]["errors"] for item in splits if item["season"] == season)   
                                 season_stat["putOuts"] = sum(item["stat"]["assists"] for item in splits if item["season"] == season)
@@ -115,7 +119,6 @@ for filename in os.listdir(folder_path):
             continue
         except Exception as e2:
             logging.error(f"{filename} 에러 발생: {str(e2)}")
-
 # 연결 종료
 cursor.close()
 connection.close()

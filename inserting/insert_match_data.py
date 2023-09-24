@@ -24,8 +24,8 @@ connection = mysql.connector.connect(
 cursor = connection.cursor()
 
 for year in range(1903, 2024):
-    linescores_path = f'../linescores/linescores{year}.json'
-    match_id_path = f'../match_ids/match_ids{year}.json'
+    linescores_path = f'./linescores/linescores{year}.json'
+    match_id_path = f'./match_ids/match_ids{year}.json'
 
     if os.path.exists(linescores_path) and os.path.exists(match_id_path):
         with open(linescores_path, 'r') as lf, open(match_id_path, 'r') as mf:
