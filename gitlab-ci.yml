@@ -3,6 +3,8 @@ stages:
   - deploy
 
 frontend:
+  tags:
+    - ssafy
   stage: build
   script:
     - cd frontend
@@ -15,6 +17,8 @@ frontend:
     - ci-cd # develop 브랜치에서만 실행
 
 backend:
+  tags:
+    - ssafy
   stage: build
   script:
     - cd backend/ssafyBigswing
@@ -26,6 +30,8 @@ backend:
     - ci-cd # develop 브랜치에서만 실행
 
 deploy:
+  tags:
+    - ssafy
   stage: deploy
   only:
     - ci-cd # develop 브랜치에서만 실행
