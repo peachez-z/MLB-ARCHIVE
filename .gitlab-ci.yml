@@ -47,7 +47,7 @@ lets_test:
 
   script:
     - echo hello
-    - cd /home/gitlab-runner
+    - cd /home/ubuntu
     - touch gen_empty_file
   tags:
     - ssafy
