@@ -36,5 +36,5 @@ deploy:
   only:
     - ci-cd # develop 브랜치에서만 실행
   script:
-    - scp -i /C:/sshKeys/J9A301T.pem frontend/build/* ubuntu@j9a301a.p.ssafy.io:/home/ubuntu/frontend
-    - scp -i /C:/sshKeys/J9A301T.pem backend/ssafyBigswing/target/*.jar ubuntu@j9a301a.p.ssafy.io:/home/ubuntu/backend
+    - scp -i /C:/sshKeys/J9A301T.pem frontend/build/* ubuntu@j9a301.p.ssafy.io:/home/ubuntu/frontend
+    - scp -i /C:/sshKeys/J9A301T.pem backend/ssafyBigswing/target/*.jar ubuntu@j9a301.p.ssafy.io:/home/ubuntu/backend
