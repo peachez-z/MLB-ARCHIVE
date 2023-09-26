@@ -1,40 +1,53 @@
+# stages:
+#   - build
+#   - deploy
+
+# frontend:
+#   tags:
+#     - ssafy
+#   stage: build
+#   script:
+#     - cd frontend
+#     - npm install
+#     - npm run build
+#   artifacts:
+#     paths:
+#       - frontend/build
+#   only:
+#     - ci-cd # 브랜치에서만 실행
+
+# backend:
+#   tags:
+#     - ssafy
+#   stage: build
+#   script:
+#     - cd backend/ssafyBigswing
+#     - ./mvnw clean package
+#   artifacts:
+#     paths:
+#       - backend/ssafyBigswing/target/*.jar
+#   only:
+#     - ci-cd # 브랜치에서만 실행
+
+# deploy:
+#   tags:
+#     - ssafy
+#   stage: deploy
+#   only:
+#     - ci-cd # 브랜치에서만 실행
+#   script:
+#     - scp -i /C:/sshKeys/J9A301T.pem frontend/build/* ubuntu@j9a301.p.ssafy.io:/home/ubuntu/frontend
+#     - scp -i /C:/sshKeys/J9A301T.pem backend/ssafyBigswing/target/*.jar ubuntu@j9a301.p.ssafy.io:/home/ubuntu/backend
+
 stages:
-  - build
-  - deploy
+  - test
 
-frontend:
-  tags:
-    - ssafy
-  stage: build
-  script:
-    - cd frontend
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - frontend/build
-  only:
-    - ci-cd # develop 브랜치에서만 실행
+lets_test:
+  stage: test
 
-backend:
-  tags:
-    - ssafy
-  stage: build
   script:
-    - cd backend/ssafyBigswing
-    - ./mvnw clean package
-  artifacts:
-    paths:
-      - backend/ssafyBigswing/target/*.jar
-  only:
-    - ci-cd # develop 브랜치에서만 실행
-
-deploy:
+    - echo hello
+    - cd /home/gitlab-runner
+    - touch gen_empty_file
   tags:
-    - ssafy
-  stage: deploy
-  only:
-    - ci-cd # develop 브랜치에서만 실행
-  script:
-    - scp -i /C:/sshKeys/J9A301T.pem frontend/build/* ubuntu@j9a301.p.ssafy.io:/home/ubuntu/frontend
-    - scp -i /C:/sshKeys/J9A301T.pem backend/ssafyBigswing/target/*.jar ubuntu@j9a301.p.ssafy.io:/home/ubuntu/backend
+    - my-runner
