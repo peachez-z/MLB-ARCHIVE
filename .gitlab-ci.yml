@@ -50,4 +50,4 @@ lets_test:
     - cd /home/gitlab-runner
     - touch gen_empty_file
   tags:
-    - my-runner
+    - ssafy
