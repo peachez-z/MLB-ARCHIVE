@@ -1,53 +1,25 @@
-# stages:
-#   - build
-#   - deploy
-
-# frontend:
-#   tags:
-#     - ssafy
-#   stage: build
-#   script:
-#     - cd frontend
-#     - npm install
-#     - npm run build
-#   artifacts:
-#     paths:
-#       - frontend/build
-#   only:
-#     - ci-cd # 브랜치에서만 실행
-
-# backend:
-#   tags:
-#     - ssafy
-#   stage: build
-#   script:
-#     - cd backend/ssafyBigswing
-#     - ./mvnw clean package
-#   artifacts:
-#     paths:
-#       - backend/ssafyBigswing/target/*.jar
-#   only:
-#     - ci-cd # 브랜치에서만 실행
-
-# deploy:
-#   tags:
-#     - ssafy
-#   stage: deploy
-#   only:
-#     - ci-cd # 브랜치에서만 실행
-#   script:
-#     - scp -i /C:/sshKeys/J9A301T.pem frontend/build/* ubuntu@j9a301.p.ssafy.io:/home/ubuntu/frontend
-#     - scp -i /C:/sshKeys/J9A301T.pem backend/ssafyBigswing/target/*.jar ubuntu@j9a301.p.ssafy.io:/home/ubuntu/backend
-
 stages:
-  - test
+  - deploy
 
-lets_test:
-  stage: test
-
+deploy:
+  stage: deploy
   script:
-    - echo hello
-    - cd /home/ubuntu
-    - touch gen_empty_file
-  tags:
-    - ssafy
+    - |
+      if [ ! -d "/home/pjt" ]; then
+        mkdir /home/pjt
+        # Git 저장소가 없는 경우 클론
+        git clone -b ci-cd https://"$GIT_USERNAME":"$GIT_PASSWORD"@"$GIT_REPOSITORY"
+      fi
+    - cd /home/pjt # 프로젝트 root 디렉토리로 이동
+    - |
+      else
+        # Git 저장소가 이미 있는 경우 브랜치 업데이트
+        cd /home/pjt
+        git checkout ci-cd
+        git pull origin ci-cd
+      fi
+    # - npm install # 또는 필요한 빌드 스크립트를 실행
+    # - npm run build # 또는 필요한 빌드 스크립트를 실행
+    # - npm start # 서비스 실행 명령어 (예: Node.js 애플리케이션의 경우)
+  only:
+    - ci-cd # ci-cd 브랜치에서만 실행
