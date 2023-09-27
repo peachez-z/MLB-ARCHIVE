@@ -12,7 +12,7 @@ deploy:
       if ! git remote | grep -q "origin"; then
         cd /home/pjt
         # Git 저장소가 없는 경우 add
-        git remote add origin https://"$GIT_USERNAME":"$GIT_PASSWORD"@"$GIT_REPOSITORY"
+        git remote add origin https://"$GIT_REPOSITORY"
       fi
       # Git 저장소가 이미 있는 경우 브랜치 업데이트
       cd /home/pjt
