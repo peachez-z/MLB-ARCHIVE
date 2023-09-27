@@ -7,16 +7,17 @@ deploy:
     - |
       if [ ! -d "/home/pjt" ]; then
         mkdir /home/pjt
-        cd /home/pjt # 프로젝트 root 디렉토리로 이동
-        # Git 저장소가 없는 경우 클론
-        git clone -b ci-cd https://"$GIT_USERNAME":"$GIT_PASSWORD"@"$GIT_REPOSITORY"
-        
-      else
-        # Git 저장소가 이미 있는 경우 브랜치 업데이트
-        cd /home/pjt
-        git checkout ci-cd
-        git pull origin ci-cd
       fi
+    - |
+      if ! git remote | grep -q "origin"; then
+        cd /home/pjt
+        # Git 저장소가 없는 경우 add
+        git remote add origin https://"$GIT_USERNAME":"$GIT_PASSWORD"@"$GIT_REPOSITORY"
+      fi
+      # Git 저장소가 이미 있는 경우 브랜치 업데이트
+      cd /home/pjt
+      git checkout ci-cd
+      git pull origin ci-cd
     # - npm install # 또는 필요한 빌드 스크립트를 실행
     # - npm run build # 또는 필요한 빌드 스크립트를 실행
     # - npm start # 서비스 실행 명령어 (예: Node.js 애플리케이션의 경우)
