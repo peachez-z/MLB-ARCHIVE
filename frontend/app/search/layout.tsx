@@ -1,5 +1,6 @@
 import React from "react";
 import AppBar from "@/app/AppBar";
+import LoginCheck from "@/app/loginCheck";
 
 export default function SearchLayout({
                                       children,
@@ -8,7 +9,8 @@ export default function SearchLayout({
 }) {
   return (
     <>
-      {/*<AppBar />*/}
+      <AppBar />
+      <LoginCheck />
       {children}
     </>
   )
