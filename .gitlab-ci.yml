@@ -17,8 +17,9 @@ build:
     - ./gradlew clean build
     - docker build -t springboot . # Docker 이미지 빌드
   artifacts:
+    name: "test"
     paths:
-      - ./build/libs/*.jar
+      - ./backend/ssafyBigswing/build/libs/*.jar
   tags:
     - ssafy
   when: manual
