@@ -11,9 +11,9 @@ build:
     - ci-cd
   before_script:
     - echo 'build starts'
+    - cd ./backend/ssafyBigswing/
     - chmod +x ./gradlew
   script:
-    - cd ./backend/ssafyBigswing/
     - gradlew clean build
     - docker build -t springboot . # Docker 이미지 빌드
   artifacts:
