@@ -13,7 +13,8 @@ build:
     - echo 'build starts'
     - chmod +x ./gradlew
   script:
-    - ./gradlew clean build
+    - cd ./backend/ssafyBigswing/
+    - gradlew clean build
     - docker build -t springboot . # Docker 이미지 빌드
   artifacts:
     paths:
