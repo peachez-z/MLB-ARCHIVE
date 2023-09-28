@@ -18,7 +18,7 @@ build:
     - docker build -t springboot . # Docker 이미지 빌드
   artifacts:
     paths:
-      - build/libs/*.jar
+      - ./build/libs/*.jar
   tags:
     - ssafy
   when: manual
