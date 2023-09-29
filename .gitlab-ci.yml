@@ -29,7 +29,7 @@ frontend-build:
     - echo 'frontend build starts'
     - cd ./frontend
   script:
-    - docker build -f ./Dockerfile -t nextjs . # Docker 이미지 빌드
+    - docker build -t nextjs -f /frontend/DockerFile . # Docker 이미지 빌드
   tags:
     - ssafy
   when: manual
