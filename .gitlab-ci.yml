@@ -2,37 +2,60 @@ stages:
   - build
   - deploy
 
-# variables:
-#   DOCKER_HOST: tcp://docker:2375/
-
-build:
+backend-build:
   stage: build
   only:
     - ci-cd
   before_script:
-    - echo 'build starts'
+    - echo 'backend build starts'
     - cd ./backend/ssafyBigswing/
     - chmod +x ./gradlew
   script:
     - ./gradlew clean build
     - docker build -t springboot . # Docker 이미지 빌드
   artifacts:
-    name: "test"
+    name: "springboot"
     paths:
       - ./backend/ssafyBigswing/build/libs/*.jar
   tags:
     - ssafy
   when: manual
 
-dev_deploy:
+frontend-build:
+  stage: build
+  only:
+    - ci-cd
+  before_script:
+    - echo 'frontend build starts'
+    - cd ./frontend
+  script:
+    - docker build -t nextjs . # Docker 이미지 빌드
+  tags:
+    - ssafy
+  when: manual
+
+backend-deploy:
   stage: deploy
   only:
     - ci-cd
   before_script:
-    - echo 'deploy starts'
+    - echo 'backend deploy starts'
     - cd ./backend/ssafyBigswing/
   script:
     - docker run -d -p 8080:8080 --name springboot-app springboot # Docker 컨테이너 실행
+  tags:
+    - ssafy
+  when: manual
+
+frontend-deploy:
+  stage: deploy
+  only:
+    - ci-cd
+  before_script:
+    - echo 'frontend deploy starts'
+    - cd ./frontend/
+  script:
+    - docker run -it -d --rm -p 3000:3000 --name nextjs-app nextjs # Docker 컨테이너 실행
   tags:
     - ssafy
   when: manual
