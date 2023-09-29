@@ -10,4 +10,4 @@ COPY ./ /app
 
 EXPOSE 3000
 
-CMD ["next", "dev"]
+CMD ["npm","run","dev"]
