@@ -1,12 +1,12 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
 
 COPY package*.json /app
 
-RUN npm i -f --silence
+RUN npm install -f
 
-COPY . /app
+COPY ./ /app
 
 EXPOSE 3000
 
