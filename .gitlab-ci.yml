@@ -43,7 +43,6 @@ backend-check-container:
         echo "The 'nextjs-app' container already exists."
         docker stop nextjs-app  # 컨테이너 중지
         docker rm nextjs-app    # 컨테이너 삭제
-        exit 1  # 실행 종료
       fi
 frontend-check-container:
   stage: check_container
@@ -53,7 +52,6 @@ frontend-check-container:
         echo "The 'springboot-app' container already exists."
         docker stop springboot-app  # 컨테이너 중지
         docker rm springboot-app    # 컨테이너 삭제
-        exit 1  # 실행 종료
       fi
 backend-deploy:
   stage: deploy
