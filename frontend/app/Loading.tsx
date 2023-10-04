@@ -6,10 +6,16 @@ import Image from "next/image";
 
 function Loading() {
   return (
-    <>
-      <Image src={ logo } alt="로고" />
-      <Image src={ ball } alt="공" />
-    </>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Image className="loading_logo" src={logo} alt="로고" />
+      <Image className="loading_ball" src={ball} alt="공" />
+    </div>
   );
 }
 

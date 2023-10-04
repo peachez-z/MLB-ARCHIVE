@@ -37,3 +37,19 @@
 .content {
   padding: 20px;
 }
+
+.loading_logo {
+  width: 200px;
+}
+
+.loading_ball {
+  width: 200px;
+  animation: rotate_image 6s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes rotate_image {
+  100% {
+    transform: rotate(360deg);
+  }
+}
