@@ -40,7 +40,20 @@ backend-deploy:
     - ci-cd
   before_script:
     - echo 'backend deploy starts'
-    - cd ./backend/ssafyBigswing/
+    -| if [[ "$(docker ps -a -q -f "name=springboot-app" 2> /dev/null)" != "" ]]; then
+      echo "There is a container."
+      if [[ "$(docker container ls -q --filter "name=springboot-app" 2> /dev/null)" != "" ]]; then
+      echo "Container is running."
+      echo "Shut down and remove the container."
+      docker stop $(docker container ls -q --filter "name=springboot-app")
+      elif [[ "$(docker container ls -q --filter "name=springboot-app" 2> /dev/null)" == "" ]]; then
+      echo "Container is not running."
+      echo "remove the container."
+      fi
+      docker rm $springboot-app
+      else
+      echo "Container is missing."
+      fi
   script:
     - docker run -d -p 8080:8080 --name springboot-app springboot # Docker 컨테이너 실행
   tags:
@@ -53,7 +66,20 @@ frontend-deploy:
     - ci-cd
   before_script:
     - echo 'frontend deploy starts'
-    - cd ./frontend/
+    -|  if [[ "$(docker ps -a -q -f "name=nextjs-app" 2> /dev/null)" != "" ]]; then
+          echo "There is a container."
+          if [[ "$(docker container ls -q --filter "name=nextjs-app" 2> /dev/null)" != "" ]]; then
+            echo "Container is running."
+            echo "Shut down and remove the container."
+            docker stop $(docker container ls -q --filter "name=nextjs-app")
+          elif [[ "$(docker container ls -q --filter "name=nextjs-app" 2> /dev/null)" == "" ]]; then
+            echo "Container is not running."
+            echo "remove the container."
+          fi
+        docker rm nextjs-app
+        else
+          echo "Container is missing."
+        fi
   script:
     - sudo docker run -d -p 3000:3000 --name nextjs-app nextjs # Docker 컨테이너 실행
   tags:
