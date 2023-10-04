@@ -3,6 +3,8 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUserData} from "@/app/redux/features/userSlice";
 import {useRouter} from "next/navigation";
+import LoadingPage from "@/app/components/LoadingPage";
+import Loading from "@/app/Loading";
 
 const KakaoLoginPage = () => {
   const router = useRouter()
@@ -25,17 +27,15 @@ const KakaoLoginPage = () => {
     }
   }, [code])
   const isLoggedIn = useSelector((state:any) => !!state.user?.isLoggedIn)
-  const userId = useSelector((state:any) => state.user.userData?.userId)
   useEffect(() => {
+    console.log(isLoggedIn)
     if (isLoggedIn) {
-      router.push(`/user/mypage`)
+      router.push("/main");
     }
   }, [isLoggedIn])
   return (
     <>
-      <div>
-        카카오 로그인 로직 진행 중
-      </div>
+      <Loading />
     </>
   )
 }

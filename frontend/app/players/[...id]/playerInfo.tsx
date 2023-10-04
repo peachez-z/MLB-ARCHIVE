@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Typography, Card } from "antd";
 
 interface PlayerInfo {
-  backnumber: string;
+  backnumber: string | number;
   debutDate: string;
   retireDate: string;
   height: string;
@@ -19,7 +19,7 @@ interface Props {
 
 const PlayerInfoTable: React.FC<Props> = ({ playerData }) => {
   console.log({ playerData });
-  const columns = [
+  const columns: any = [
     {
       title: "항목",
       dataIndex: "field",
@@ -57,9 +57,10 @@ const PlayerInfoTable: React.FC<Props> = ({ playerData }) => {
   return (
     <div
       style={{
-        width: "60%",
-        border: "2px solid #cccccc",
+        width: "100%",
+        border: "5px solid rgb(6, 31, 77)",
         borderRadius: "10px",
+        marginLeft: "20px",
       }}
     >
       <Card title="Player Information">

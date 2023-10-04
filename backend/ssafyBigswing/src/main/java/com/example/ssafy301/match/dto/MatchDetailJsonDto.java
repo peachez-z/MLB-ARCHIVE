@@ -66,7 +66,7 @@ public class MatchDetailJsonDto {
     }
     @Data
     public static class Position {
-        private Long code;
+        private String code;
         private String name;
         private String type;
     }
@@ -78,7 +78,7 @@ public class MatchDetailJsonDto {
         private Long baseOnBalls;//볼넷
         private Long strikeOuts;//삼진
         private Long homeRuns;//홈런
-        private Long atBats;//타수
+        private Long atBats; //타수
 
     }
     @Data
