@@ -1,32 +1,42 @@
-"use client"
-import {useSelector} from "react-redux";
-import {useRouter} from "next/navigation";
+"use client";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
-const   FollowedTeam = () => {
-  const followList = useSelector((state:any) => state.user.followList)
-  const router = useRouter()
+const FollowedTeam = () => {
+  const followList = useSelector((state: any) => state.user.followList);
+  const router = useRouter();
   return (
     <>
+      <div className="main_title">[ FOLLOW TEAM ]</div>
+      {/* <h2>[ FOLLOW TEAM ]</h2> */}
       <div>
-        {
-          followList?.PlayerList
-            ? (
-              <div>
-                <div>팔로우 한 선수들</div>
-                <div>{followList.PlayerList.map((player:any) => (
-                  <div key={player.playerId} onClick={() => router.push(`/players/${player.playerId}`)}>
-                    <div>영문 이름 : {player.name}</div>
-                    <div>한글 이름 : {player.korName}</div>
-                    <img src={player.image} alt="이미지없음"/>
+        {followList?.TeamList ? (
+          <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              {followList.TeamList.map((team: any) => (
+                <div
+                  key={team.teamId}
+                  onClick={() => router.push(`/teams/${team.teamId}`)}
+                >
+                  <div className="miniCard2">
+                    <img
+                      src={team.teamLogo}
+                      alt="이미지없음"
+                      className="playerImage2"
+                      style={{ backgroundColor: "white" }}
+                    />
+                    <div>{team.teamName}</div>
                   </div>
-                ))}</div>
-              </div>
-            )
-            : (<p>팔로우한 선수들이 없습니다.</p>)
-        }
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>팔로우한 팀이 없습니다.</p>
+        )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default FollowedTeam
+export default FollowedTeam;

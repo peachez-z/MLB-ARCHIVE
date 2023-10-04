@@ -9,7 +9,6 @@ import com.example.ssafy301.match.repository.MatchDetailRepository;
 import com.example.ssafy301.match.repository.MatchRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -125,7 +124,8 @@ public class MatchService {
     }
 
     public MatchDetailJsonDto getDetailMatchByMatchId(Long matchId) {
-        MatchDetail matchDetail = matchDetailRepository.findByMatchId(matchId);
+        Match match = matchRepository.findById(matchId).orElseThrow(() -> new NotFoundException(FailCode.NO_MATCH));;
+        MatchDetail matchDetail = matchDetailRepository.findById(match.getMatchDetailId()).orElseThrow(() -> new NotFoundException(FailCode.NO_MATCH));;;
         log.debug("DTO Result: " + matchDetail.getMatchId()+" zzzz ",matchDetail.getId());
         if (matchDetail == null) {
             throw new NotFoundException(FailCode.NO_MATCH);
@@ -143,13 +143,14 @@ public class MatchService {
     }
 
     public LineScoreDto getLineScoreByMatchId(Long matchId) {
-        MatchDetail matchDetail = matchDetailRepository.findByMatchId(matchId);
+        Match match = matchRepository.findById(matchId).orElseThrow(() -> new NotFoundException(FailCode.NO_MATCH));;
+        MatchDetail matchDetail = matchDetailRepository.findById(match.getMatchDetailId()).orElseThrow(() -> new NotFoundException(FailCode.NO_MATCH));;;
         if (matchDetail == null) {
             throw new NotFoundException(FailCode.NO_MATCH);
         }
 
         try {
-            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return objectMapper.readValue(matchDetail.getLinescore(), LineScoreDto.class);
         } catch (IOException e) {
             throw new RuntimeException("Error parsing JSON", e);

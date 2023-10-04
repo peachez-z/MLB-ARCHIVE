@@ -69,7 +69,7 @@ const AllPlayers = () => {
     const selectedAlphabet = alphabets[idx];
     setSearchData(selectedAlphabet);
     // 알파벳 이동 시 페이지 시작 지점 0으로 설정
-    setNowPage(0)
+    setNowPage(0);
     const action = {
       searchData: selectedAlphabet,
       nowPage: 0,
@@ -103,7 +103,7 @@ const AllPlayers = () => {
   const [activeCard, setActiveCard] = useState(null);
   const [backgroundStyle, setBackgroundStyle] = useState(null);
 
-  const handleMouseMove = (e:any, cardIndex:any) => {
+  const handleMouseMove = (e: any, cardIndex: any) => {
     const l = e.nativeEvent.offsetX;
     const t = e.nativeEvent.offsetY;
     const h = e.currentTarget.clientHeight;
@@ -130,7 +130,9 @@ const AllPlayers = () => {
 
   return (
     <>
-      <Title>Players</Title>
+      <div className="p_title">
+        <p className="p_title">Players</p>
+      </div>
       <Helmet>
         <link
           rel="stylesheet"
@@ -144,7 +146,7 @@ const AllPlayers = () => {
             className={`alphabet ${isActive[index] ? "clicked_alphabet" : ""}`}
             onClick={() => backgroundCheck(index)}
           >
-            {alphabet}
+            <button>{alphabet}</button>
           </div>
         ))}
       </div>
@@ -153,6 +155,7 @@ const AllPlayers = () => {
           searchLetter.map((player: any) => (
             <div
               key={player.id}
+              style={{cursor: 'pointer'}}
               className="playerContent"
               onClick={() => handleDetailPage(player.id)}
             >
@@ -174,14 +177,14 @@ const AllPlayers = () => {
                           <img
                             src={player.image}
                             alt={player.name}
-                            className="playerFace"
+                            className="playerFace2"
                             style={{ zIndex: "99999" }}
                           />
                           <div className="rectangle">
                             <div className="rectangle2"></div>
                             <div>
                               <div className="position2">{player.name}</div>
-                              <div style={{ display: "flex" }}>
+                              <div>
                                 <div className="position">
                                   {player.height}cm / {player.weight}kg
                                 </div>
@@ -225,7 +228,9 @@ const AllPlayers = () => {
           </span>
         </button>
         {/* 전체 페이지 중 현재 페이지 표시 */}
-        <div>{nowPage + 1} / {totalPage}</div>
+        <div>
+          {nowPage + 1} / {totalPage}
+        </div>
       </div>
     </>
   );

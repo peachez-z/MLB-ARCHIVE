@@ -28,7 +28,37 @@ import TampaBayRays from "@/assets/teamlogo/TampaBayRays.svg";
 import TexasRangers from "@/assets/teamlogo/TexasRangers.svg";
 import TorontoBlueJays from "@/assets/teamlogo/TorontoBlueJays.svg";
 import WashingtonNationals from "@/assets/teamlogo/WashingtonNationals.svg";
-import {StaticImageData} from "next/image";
+import { StaticImageData } from "next/image";
+import ABphoto from "@/assets/teamphoto/ABphoto.png";
+import ADphoto from "@/assets/teamphoto/ADphoto.jpg";
+import BOphoto from "@/assets/teamphoto/BOphoto.jpg";
+import BRphoto from "@/assets/teamphoto/BRphoto.jpg";
+import CCphoto from "@/assets/teamphoto/CCphoto.jpg";
+import CGphoto from "@/assets/teamphoto/CGphoto.jpg";
+import CRockiesphoto from "@/assets/teamphoto/CRockiesphoto.jpg";
+import CRphoto from "@/assets/teamphoto/CRphoto.jpg";
+import CWSphoto from "@/assets/teamphoto/CWSphoto.jpg";
+import HAphoto from "@/assets/teamphoto/HAphoto.jpg";
+import LAAphoto from "@/assets/teamphoto/LAAphoto.jpg";
+import LADphoto from "@/assets/teamphoto/LADphoto.jpg";
+import MBphoto from "@/assets/teamphoto/MBphoto.jpg";
+import MMphoto from "@/assets/teamphoto/MMphoto.jpg";
+import MTphoto from "@/assets/teamphoto/MTphoto.jpg";
+import NYMphoto from "@/assets/teamphoto/NYMphoto.jpg";
+import NYYphoto from "@/assets/teamphoto/NYYphoto.jpg";
+import OAphoto from "@/assets/teamphoto/OAphoto.jpg";
+import PPiratesphoto from "@/assets/teamphoto/PPiratesphoto.jpg";
+import PPphoto from "@/assets/teamphoto/PPphoto.jpg";
+import Royalsphoto from "@/assets/teamphoto/Royalsphoto.jpg";
+import SDPphoto from "@/assets/teamphoto/SDPphoto.jpg";
+import SFGphoto from "@/assets/teamphoto/SFGphoto.jpg";
+import SLCphoto from "@/assets/teamphoto/SLCphoto.jpg";
+import SMphoto from "@/assets/teamphoto/SMphoto.jpg";
+import TBJphoto from "@/assets/teamphoto/TBJphoto.jpeg";
+import TBRphoto from "@/assets/teamphoto/TBRphoto.jpg";
+import Tigersphoto from "@/assets/teamphoto/Tigersphoto.jpg";
+import TRphoto from "@/assets/teamphoto/TRphoto.jpg";
+import WNphoto from "@/assets/teamphoto/WNphoto.jpg";
 
 type TeamType = {
   id: number;
@@ -38,6 +68,7 @@ type TeamType = {
   rotationX: number;
   rotationY: number;
   twitter: string;
+  team: StaticImageData;
 };
 
 export const teamData = [
@@ -48,7 +79,8 @@ export const teamData = [
     logo: ArizonaDiamondbacks,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Dbacks',
+    twitter: "https://twitter.com/Dbacks",
+    team: ADphoto,
   },
   {
     id: 144,
@@ -57,7 +89,8 @@ export const teamData = [
     logo: AtlantaBraves,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Braves',
+    twitter: "https://twitter.com/Braves",
+    team: ABphoto,
   },
   {
     id: 110,
@@ -66,7 +99,8 @@ export const teamData = [
     logo: BaltimoreOrioles,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Orioles',
+    twitter: "https://twitter.com/Orioles",
+    team: BOphoto,
   },
   {
     id: 111,
@@ -75,7 +109,8 @@ export const teamData = [
     logo: BostonRedSox,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/redsox',
+    twitter: "https://twitter.com/redsox",
+    team: BRphoto,
   },
   {
     id: 112,
@@ -84,7 +119,8 @@ export const teamData = [
     logo: ChicagoCubs,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Cubs',
+    twitter: "https://twitter.com/Cubs",
+    team: CCphoto,
   },
   {
     id: 145,
@@ -93,7 +129,8 @@ export const teamData = [
     logo: ChicagoWhiteSox,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/whitesox',
+    twitter: "https://twitter.com/whitesox",
+    team: CWSphoto,
   },
   {
     id: 113,
@@ -102,16 +139,18 @@ export const teamData = [
     logo: CincinnatiReds,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Reds',
+    twitter: "https://twitter.com/Reds",
+    team: CRphoto,
   },
   {
     id: 114,
-    name:  "Cleveland Guardians",
+    name: "Cleveland Guardians",
     linkName: "ClevelandGuardians",
     logo: ClevelandGuardians,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/CLEGuardians',
+    twitter: "https://twitter.com/CLEGuardians",
+    team: CGphoto,
   },
   {
     id: 115,
@@ -120,7 +159,8 @@ export const teamData = [
     logo: ColoradoRockies,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Rockies',
+    twitter: "https://twitter.com/Rockies",
+    team: CRockiesphoto,
   },
   {
     id: 116,
@@ -129,7 +169,8 @@ export const teamData = [
     logo: DetroitTigers,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/tigers',
+    twitter: "https://twitter.com/tigers",
+    team: Tigersphoto,
   },
   {
     id: 117,
@@ -138,7 +179,8 @@ export const teamData = [
     logo: HoustonAstros,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/astros',
+    twitter: "https://twitter.com/astros",
+    team: HAphoto,
   },
   {
     id: 118,
@@ -147,7 +189,8 @@ export const teamData = [
     logo: KansasCityRoyals,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/royals',
+    twitter: "https://twitter.com/royals",
+    team: Royalsphoto,
   },
   {
     id: 108,
@@ -156,7 +199,8 @@ export const teamData = [
     logo: LosAngelesAngels,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Angels',
+    twitter: "https://twitter.com/Angels",
+    team: LAAphoto,
   },
   {
     id: 119,
@@ -165,7 +209,8 @@ export const teamData = [
     logo: LosAngelesDodgers,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Dodgers',
+    twitter: "https://twitter.com/Dodgers",
+    team: LADphoto,
   },
   {
     id: 146,
@@ -174,16 +219,18 @@ export const teamData = [
     logo: MiamiMarlins,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Marlins',
+    twitter: "https://twitter.com/Marlins",
+    team: MMphoto,
   },
   {
     id: 158,
-    name : "Milwaukee Brewers",
+    name: "Milwaukee Brewers",
     linkName: "MilwaukeeBrewers",
     logo: MilwaukeeBrewers,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/brewers',
+    twitter: "https://twitter.com/brewers",
+    team: MBphoto,
   },
   {
     id: 142,
@@ -192,7 +239,8 @@ export const teamData = [
     logo: MinnesotaTwins,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Twins',
+    twitter: "https://twitter.com/Twins",
+    team: MTphoto,
   },
   {
     id: 121,
@@ -201,7 +249,8 @@ export const teamData = [
     logo: NewYorkMets,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Mets',
+    twitter: "https://twitter.com/Mets",
+    team: NYMphoto,
   },
   {
     id: 147,
@@ -210,7 +259,8 @@ export const teamData = [
     logo: NewYorkYankees,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Yankees',
+    twitter: "https://twitter.com/Yankees",
+    team: NYYphoto,
   },
   {
     id: 133,
@@ -219,7 +269,8 @@ export const teamData = [
     logo: OaklandAs,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Athletics',
+    twitter: "https://twitter.com/Athletics",
+    team: OAphoto,
   },
   {
     id: 143,
@@ -228,7 +279,8 @@ export const teamData = [
     logo: PhiladelphiaPhillies,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Phillies',
+    twitter: "https://twitter.com/Phillies",
+    team: PPphoto,
   },
   {
     id: 134,
@@ -237,7 +289,8 @@ export const teamData = [
     logo: PittsburghPirates,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Pirates',
+    twitter: "https://twitter.com/Pirates",
+    team: PPiratesphoto,
   },
   {
     id: 135,
@@ -246,25 +299,28 @@ export const teamData = [
     logo: SanDiegoPadres,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/padres',
+    twitter: "https://twitter.com/padres",
+    team: SDPphoto,
   },
   {
     id: 137,
-    name:  "San Francisco Giants" ,
+    name: "San Francisco Giants",
     linkName: "SanFranciscoGiants",
     logo: SanFranciscoGiants,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/SFGiants',
+    twitter: "https://twitter.com/SFGiants",
+    team: SFGphoto,
   },
   {
     id: 136,
-    name:  "Seattle Mariners",
+    name: "Seattle Mariners",
     linkName: "SeattleMariners",
     logo: SeattleMariners,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Mariners',
+    twitter: "https://twitter.com/Mariners",
+    team: SMphoto,
   },
   {
     id: 138,
@@ -273,16 +329,18 @@ export const teamData = [
     logo: StLouisCardinals,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Cardinals',
+    twitter: "https://twitter.com/Cardinals",
+    team: SLCphoto,
   },
   {
     id: 139,
-    name:  "Tampa Bay Rays",
+    name: "Tampa Bay Rays",
     linkName: "TampaBayRays",
     logo: TampaBayRays,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Raysbaseball',
+    twitter: "https://twitter.com/Raysbaseball",
+    team: TBRphoto,
   },
   {
     id: 140,
@@ -291,7 +349,8 @@ export const teamData = [
     logo: TexasRangers,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/rangers',
+    twitter: "https://twitter.com/rangers",
+    team: TRphoto,
   },
   {
     id: 141,
@@ -300,7 +359,8 @@ export const teamData = [
     logo: TorontoBlueJays,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Bluejays',
+    twitter: "https://twitter.com/Bluejays",
+    team: TBJphoto,
   },
   {
     id: 120,
@@ -309,15 +369,21 @@ export const teamData = [
     logo: WashingtonNationals,
     rotationX: 0,
     rotationY: 0,
-    twitter: 'https://twitter.com/Nationals',
+    twitter: "https://twitter.com/Nationals",
+    team: WNphoto,
   },
-]
+];
 
-export const selectLogo = (id:number) => {
-  const team = teamData.find(team => team.id === id)
-  return team ? team.logo : null
-}
-export const selectTwitter = (id:number) => {
-  const team = teamData.find(team => team.id === id)
-  return team ? team.twitter : 'www.naver.com'
-}
+export const selectLogo = (id: number) => {
+  const team = teamData.find((team) => team.id === id);
+  return team ? team.logo : null;
+};
+export const selectTwitter = (id: number) => {
+  const team = teamData.find((team) => team.id === id);
+  return team ? team.twitter : "www.naver.com";
+};
+
+export const selectTeam = (id: number) => {
+  const team = teamData.find((team) => team.id === id);
+  return team ? team.team : null;
+};

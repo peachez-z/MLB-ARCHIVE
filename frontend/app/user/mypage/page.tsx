@@ -1,69 +1,114 @@
-'use client'
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {fetchFollowData, fetchReUserData, fetchUserLogout} from "@/app/redux/features/userSlice";
-import {useRouter} from "next/navigation";
+"use client";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import {
+  fetchFollowData,
+  fetchReUserData,
+  fetchUserLogout,
+} from "@/app/redux/features/userSlice";
+import { useRouter } from "next/navigation";
 import FollowedTeam from "@/app/components/user/followedTeam";
 import FollowedPlayer from "@/app/components/user/followedPlayer";
-import "../../../styles/MyPageStyle.scss"
-import Image from "next/image";
-import systemImg from "../../../assets/system.png"
+import "../../../styles/MyPageStyle.scss";
+import { Divider } from "antd";
+import {recommendAPI} from "@/app/redux/api/userAPI";
 
 const MyPage = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const userData = useSelector((state: any) => state.user.userData)
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const isLoggedIn: boolean = useSelector((state:any) => state?.user?.isLoggedIn)
+  const [isLoading, setIsLoading] = useState(true);
+  const [matchList, setMatchList] = useState([]);
+  const userData = useSelector((state: any) => state.user.userData);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const isLoggedIn: boolean = useSelector(
+    (state: any) => state?.user?.isLoggedIn
+  );
 
   useEffect(() => {
-    if (!isLoggedIn && !sessionStorage.getItem("refreshToken") ) {
-      console.log(isLoggedIn)
-      router.push(`/login`)
+    if (!isLoggedIn && !sessionStorage.getItem("refreshToken")) {
+      console.log(isLoggedIn);
+      router.push(`/login`);
     }
-  })
+  });
   useEffect(() => {
     if (sessionStorage.getItem("refreshToken")) {
-      dispatch(fetchReUserData())
+      dispatch(fetchReUserData());
     }
-  }, [])
+    const response:any = recommendAPI()
+    response
+      .then(() => {
+        console.log(response)
+        setMatchList(response.resultData)
+      })
+  }, []);
 
   const getFollowBTN = () => {
-    dispatch(fetchFollowData())
-  }
+    dispatch(fetchFollowData());
+  };
 
   const logoutBTN = () => {
-    dispatch(fetchUserLogout())
-    router.push('/login')
-  }
+    dispatch(fetchUserLogout());
+    router.push("/login");
+  };
   return (
     <>
       <div>
-        {userData &&
-          (
-            <div className="myInfoContents">
-              <div className="profile">
-                <img src={userData.image} alt="이미지에러" className="profileImage"/>
-                <div>
-                  <div>{userData.nickname}</div>
-                  <div>{userData.email}</div>
-                </div>
-                <Image src={systemImg} alt="설정 이미지" onClick={() => router.push('/user/edit')}
-                />
+        <div className="gametime">
+          {matchList && matchList.length > 0 ?
+            matchList.map((content: any) => (
+              <div key={content.id} className="one_game">
+                <div>{content.awayName} vs {content.homeName}</div>
+                <div>경기 일자 : {content.matchDate.slice(0, 10)}</div>
               </div>
-              <div className="followList">
-                <FollowedTeam />
+            )) :
+            <div className="one_game">
+              <p>추천 경기가 없습니다.</p>
+            </div>
+          }
+        </div>
+        <div></div>
+        {userData && (
+          <div className="myInfoContents">
+            <div>
+              <div className="my_profile">
+                <img
+                  src={userData.image}
+                  alt="이미지에러"
+                  className="profileImage"
+                />
+
+                <div className="namebox">
+                  <p> 닉네임 : {userData.nickname}</p>
+                  <p> e-mail : {userData.email}</p>
+                </div>
+                <div>
+                  <button
+                    className="fix"
+                    onClick={() => router.push("/user/edit")}
+                  >
+                    수정하기
+                  </button>
+                  <button className="logout" onClick={logoutBTN}>
+                    로그아웃
+                  </button>
+                </div>
+              </div>
+              {/* <Image className="system" src={systemImg} alt="설정 이미지" />
+               */}
+            </div>
+            <div className="followList">
+              <div style={{ marginBottom: "10px" }}>
                 <FollowedPlayer />
               </div>
-              <div>
-                <button onClick={logoutBTN}>로그아웃</button>
-              </div>
+
+              <Divider />
+
+              <FollowedTeam />
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default MyPage
+export default MyPage;

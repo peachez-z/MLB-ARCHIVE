@@ -52,6 +52,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    //S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
@@ -82,7 +84,3 @@ clean.doLast {
 //    options.annotationProcessorPath = configurations.querydsl
 //}
 //querydsl 추가 끝
-
-// Java 버전 명시
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
