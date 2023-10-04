@@ -20,7 +20,6 @@ backend-build:
       - ./backend/ssafyBigswing/build/libs/*.jar
   tags:
     - ssafy
-  when: manual
 
 frontend-build:
   stage: build
@@ -33,7 +32,6 @@ frontend-build:
     - docker build -t nextjs -f ./Dockerfile . # Docker 이미지 빌드
   tags:
     - ssafy
-  when: manual
 
 backend-check-container:
   stage: check_container
@@ -64,7 +62,6 @@ backend-deploy:
     - docker run -d -p 8080:8080 --name springboot-app springboot # Docker 컨테이너 실행
   tags:
     - ssafy
-  when: manual
 
 frontend-deploy:
   stage: deploy
@@ -76,4 +73,3 @@ frontend-deploy:
     - sudo docker run -d -p 3000:3000 --name nextjs-app nextjs # Docker 컨테이너 실행
   tags:
     - ssafy
-  when: manual
