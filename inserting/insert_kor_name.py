@@ -17,7 +17,11 @@ def write_log(log_message):
 
 # 1. JSON 파일 읽기
 try:
+<<<<<<< HEAD
     with open("../translated_players.json", "r", encoding="utf-8") as file:
+=======
+    with open("translated_players.json", "r", encoding="utf-8") as file:
+>>>>>>> cd0a94e9aaace2f9689023af051dbd1ae9aa239e
         players = json.load(file)
 except Exception as e:
     write_log(str(e))
