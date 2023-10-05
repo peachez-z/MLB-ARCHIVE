@@ -62,13 +62,14 @@
 }
 
 body {
-  color: black;
+  color: black !important;
 }
 
 .player_match {
   /* text-align: center; */
   border: 1px solid;
   width: 130px;
+  height: 180px;
   margin: 0 auto;
   padding: 10px;
   padding-bottom: 20px;
@@ -78,7 +79,7 @@ body {
 }
 
 .face {
-  width: 100px;
+  width: 100px !important;
   height: 130px;
   padding: 10px;
 }

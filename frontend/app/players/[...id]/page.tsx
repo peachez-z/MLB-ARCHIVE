@@ -16,6 +16,7 @@ import { teamData } from "@/app/components/team/teamData";
 import { comparisonAPI } from "@/app/redux/api/playerAPI";
 import ArizonaDiamondbacks from "@/assets/teamlogo/ArizonaDiamondbacks.svg";
 import ADphoto from "@/assets/teamphoto/ADphoto.jpg";
+import Image from "next/image";
 
 const { Title } = Typography;
 
@@ -325,7 +326,7 @@ const PlayerDetailPage = () => {
               onChange={(e) => setComparisonName(e.target.value)}
             />
           </div>
-          <div>
+          <div style={{ display: "flex" }}>
             <div>
               {/* <label>팀 이름</label> */}
               <div
@@ -376,70 +377,95 @@ const PlayerDetailPage = () => {
           </div>
           {exceptionModal1 && <div>{exceptionModal1Message}</div>}
           <br />
-          <div className="players-container">
-            {hitters?.map((player: any) => (
-              <div
-                key={player.playerId}
-                onClick={() =>
-                  comparisonHitter(
-                    player.korName,
-                    player.image,
-                    player.batting_avg,
-                    player.ops
-                  )
-                }
-                className="player-card"
-              >
-                <div className="player_match">
-                  <div style={{ textAlign: "center" }}>{player.korName}</div>
-                  <div className="player-image-container">
-                    <img src={player.image} alt="이미지" className="face" />
+          <div>
+            <div className="players-container">
+              {hitters?.map((player: any) => (
+                <div
+                  key={player.playerId}
+                  onClick={() =>
+                    comparisonHitter(
+                      player.korName,
+                      player.image,
+                      player.batting_avg,
+                      player.ops
+                    )
+                  }
+                  className="player-card"
+                >
+                  <div className="player_match">
+                    <div style={{ textAlign: "center" }}>{player.korName}</div>
+                    <div className="player-image-container">
+                      <Image
+                        src={player.image}
+                        alt="이미지"
+                        style={{ width: "100px" }}
+                        className="face"
+                      />
+                    </div>
                   </div>
                 </div>
+              ))}
+              <br />
+              <div style={{ display: "flex" }}>
+                {pitchers?.map((player: any) => (
+                  <div
+                    key={player.playerId}
+                    onClick={() =>
+                      comparisonPitcher(
+                        player.korName,
+                        player.image,
+                        player.era,
+                        player.whip
+                      )
+                    }
+                    className="player-card"
+                  >
+                    <div className="player_match">
+                      <div style={{ textAlign: "center", fontSize: "13px" }}>
+                        {player.korName}
+                      </div>
+                      <div className="player-image-container">
+                        <img
+                          src={player.image}
+                          alt="이미지"
+                          style={{ width: "100px" }}
+                          className="face"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-            <br />
-            {pitchers?.map((player: any) => (
-              <div
-                key={player.playerId}
-                onClick={() =>
-                  comparisonPitcher(
-                    player.korName,
-                    player.image,
-                    player.era,
-                    player.whip
-                  )
-                }
-                className="player-card"
-              >
-                <div className="player-image-container">
-                  <img src={player.image} alt="이미지" />
+              <br />
+              {twoways?.map((player: any) => (
+                <div
+                  key={player.playerId}
+                  onClick={() =>
+                    comparisonTwoway(
+                      player.korName,
+                      player.image,
+                      player.era,
+                      player.whip,
+                      player.batting_avg,
+                      player.ops
+                    )
+                  }
+                  className="player-card"
+                >
+                  <div className="player_match">
+                    <div style={{ textAlign: "center" }}>{player.korName}</div>
+                    <div className="player-image-container">
+                      <img
+                        src={player.image}
+                        alt="이미지"
+                        style={{ width: "100px" }}
+                        className="face"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <p>{player.korName}</p>
-              </div>
-            ))}
-            <br />
-            {twoways?.map((player: any) => (
-              <div
-                key={player.playerId}
-                onClick={() =>
-                  comparisonTwoway(
-                    player.korName,
-                    player.image,
-                    player.era,
-                    player.whip,
-                    player.batting_avg,
-                    player.ops
-                  )
-                }
-                className="player-card"
-              >
-                <div className="player-image-container">
-                  <img src={player.image} alt="이미지" />
-                </div>
-                <p>{player.korName}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </Modal>
@@ -469,7 +495,7 @@ const PlayerDetailPage = () => {
                   ))}
 
                 {playerScore.playerHitting &&
-                  (playerScore.playerHitting.ops < ops ? (
+                  (playerScore.playerHitting.ops > ops ? (
                     <p className="red-text">
                       {" "}
                       OPS : {playerScore.playerHitting.ops}
@@ -479,11 +505,31 @@ const PlayerDetailPage = () => {
                   ))}
 
                 {playerScore.playerPitching?.era > 0 && (
-                  <p> 평균 자책점: {playerScore.playerPitching.era}</p>
+                  <p>
+                    {playerScore.playerPitching.era < era ? (
+                      <span className="red-text">
+                        평균 자책점: {playerScore.playerPitching.era}
+                      </span>
+                    ) : (
+                      <p>평균 자책점: {playerScore.playerPitching.era}</p>
+                    )}
+                  </p>
                 )}
+                {/* {playerScore.playerPitching?.era > 0 && (
+                  <p> 평균 자책점: {playerScore.playerPitching.era}</p>
+                )} */}
 
+                {/* WHIP */}
                 {playerScore.playerPitching?.whip > 0 && (
-                  <p> WHIP : {playerScore.playerPitching.whip}</p>
+                  <p>
+                    {whip < playerScore.playerPitching?.whip ? (
+                      <span className="red-text">
+                        WHIP : {playerScore.playerPitching?.whip}
+                      </span>
+                    ) : (
+                      <p>WHIP : {playerScore.playerPitching?.whip}</p>
+                    )}
+                  </p>
                 )}
               </div>
               <hr />
@@ -505,9 +551,26 @@ const PlayerDetailPage = () => {
                     <p> OPS : {ops}</p>
                   ))}
 
-                {era > 0 && <p> 평균 자책점: {era}</p>}
+                {playerScore.playerPitching?.era > 0 && (
+                  <p>
+                    {playerScore.playerPitching.era > era ? (
+                      <span className="red-text">평균 자책점 : {era}</span>
+                    ) : (
+                      <p>평균 자책점 : {era}</p>
+                    )}
+                  </p>
+                )}
 
-                {whip > 0 && <p> WHIP : {whip}</p>}
+                {/* WHIP */}
+                {whip > 0 && (
+                  <p>
+                    {playerScore.playerPitching?.whip < whip ? (
+                      <span className="red-text">WHIP :{whip}</span>
+                    ) : (
+                      <p>WHIP :{whip}</p>
+                    )}
+                  </p>
+                )}
               </div>
             </div>
           )}
