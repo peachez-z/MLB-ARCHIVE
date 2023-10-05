@@ -23,7 +23,7 @@ def insert_fielding_data(cursor, player_id, season, career_stat, season_stat, da
     position = stats.get("position")
 
     cursor.execute('''
-        INSERT INTO `Fielding` (player_id, season, error, assist, putout, games_played, position)
+        INSERT INTO `fielding` (player_id, season, error, assist, putout, games_played, position)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     ''', (player_id, season, error, assist, putout, games_played, position))
 
@@ -53,7 +53,7 @@ config = {
     'password': db_password,
     'host': db_host,
     "port": 3306,
-    "database": "S09P22A301",  
+    "database": "s09p22a301",  
 }
 
 # 연결 생성
@@ -62,7 +62,7 @@ connection = mysql.connector.connect(**config)
 # 커서 생성
 cursor = connection.cursor()
 
-folder_path = 'players_stat'
+folder_path = 'players_stat/'
 for filename in os.listdir(folder_path):
     if filename.endswith('.json'):
         try:

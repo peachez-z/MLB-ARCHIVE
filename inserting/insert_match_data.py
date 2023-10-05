@@ -19,11 +19,11 @@ connection = mysql.connector.connect(
     user=DB_USER,
     password=DB_PASSWORD,
     port=DB_PORT,
-    database="S09P22A301"
+    database="s09p22a301"
 )
 cursor = connection.cursor()
 
-for year in range(1903, 2024):
+for year in range(1901, 1902):
     linescores_path = f'./linescores/linescores{year}.json'
     match_id_path = f'./match_ids/match_ids{year}.json'
 

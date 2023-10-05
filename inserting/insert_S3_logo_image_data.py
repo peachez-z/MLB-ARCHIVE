@@ -37,10 +37,9 @@ for file_name in os.listdir(IMAGE_DIRECTORY):
             url = f"https://{BUCKET_NAME}.s3.{REGION_NAME}.amazonaws.com/{file_name}"
             
             # player_id 추출
-            #team_id = file_name.split("_")[1].split(".")[0]
-            
+            team_id = file_name.split("_")[0]
             # 결과 dictionary에 추가
-            #result[player_id] = url
+            result[team_id] = url
             
             logging.info(f"Successfully uploaded {file_name} to S3 and saved its URL.")
 
