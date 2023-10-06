@@ -25,7 +25,6 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!isLoggedIn && !sessionStorage.getItem("refreshToken")) {
-      console.log(isLoggedIn);
       router.push(`/login`);
     }
   });
@@ -35,7 +34,6 @@ const MyPage = () => {
     }
     const response: any = recommendAPI();
     response.then((response: any) => {
-      console.log("결과", response);
       setMatchList(response.resultData);
     });
   }, []);
