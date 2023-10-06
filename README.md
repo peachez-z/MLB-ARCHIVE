@@ -18,7 +18,7 @@ MLB Archive와 함께 야구의 재미를 함께해 보세요!
 
 SNS로그인으로 쉽게 MLB Archive에 참여하세요. 안전하게 정보를 보호하며, 쉽고 빠르게 가입하고 로그인할 수 있습니다.
 
-<img src="./assets/images/login.png" width="300">
+<img src="./assets/images/login.PNG" width="300">
 
 
 ### 📹 메인 페이지
