@@ -1,6 +1,6 @@
 # 🚀 MLB Archive : MLB 야구인들을 위한 진정한 정보 사이트 🚀
 
-<img src="./frontend/assets/intro/intro_pull.PNG" width="600">
+<img src="./frontend/assets/intro/intro_pull.png" width="600">
 
 <br/>
 
